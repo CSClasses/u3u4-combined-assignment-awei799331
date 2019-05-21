@@ -1,0 +1,44 @@
+import Foundation
+
+var array1 = [String]() // empty array to store numbers
+
+if let path = Bundle.main.path(forResource: "numbers", ofType: "txt") { // access file
+    do {
+        let data = try String(contentsOfFile: path, encoding: .utf8) 
+        let myStrings = data.components(separatedBy: .newlines) // read data into string
+        for i in 0 ..< myStrings.count { // move to array1 because myStrings is not optimal to work with
+            array1.append(myStrings[i])
+        }
+    } catch { // prints any error
+        print(error)
+    }
+}
+
+var arrayDouble = [Double]() // convert numbers to Doubles
+for each in array1 { // iterate through each element
+    if Double(each) != nil { // if item is actually a double
+        arrayDouble.append(Double(each)!) // add double to new array
+    } else {
+        print("Error: non-float \'\(each)\' was detected and removed.") // print error
+    }
+}
+
+print("") // new line for readability
+
+var arrayNegatives = [Double]() // array declaration
+var arrayPositiveInts = [Int]()
+var arrayPositiveDoubles = [Double]()
+
+for each in arrayDouble { // iterate
+    if each < 0 { // if item is negative
+        arrayNegatives.append(each) // add to new array
+    } else if each == Double(Int(each)) { // if item is an integer
+        arrayPositiveInts.append(Int(each)) // add to new array
+    } else { 
+        arrayPositiveDoubles.append(each) // add to positive doubles
+    }
+}
+
+print("Positive Doubles: \(arrayPositiveDoubles)") // print output
+print("Positive Integers: \(arrayPositiveInts)")
+print("Negative Numbers: \(arrayNegatives)")
